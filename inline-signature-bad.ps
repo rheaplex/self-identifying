@@ -1,0 +1,58 @@
+%!PS
+
+% 11x17
+/pagewidth 11 72 mul def
+/pageheight 17 72 mul def
+/margin 10 def
+
+/fontsize 14 def
+
+/triangleheight 200 def
+/trianglemarginfactor 12 def
+
+% Margin 2 mul for margin above and below triangle
+/text_start pageheight triangleheight margin 2 mul fontsize add add sub def
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% The triangle
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+newpath
+
+margin trianglemarginfactor mul
+pageheight margin sub
+moveto
+
+pagewidth margin trianglemarginfactor mul sub
+pageheight margin sub triangleheight sub
+lineto
+
+margin trianglemarginfactor mul
+pageheight margin sub triangleheight sub
+lineto
+
+closepath
+stroke
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% The signature text
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+newpath
+/Courier fontsize selectfont
+/texty text_start def
+/infile (%pipe%echo This is not a triangle. | gpg -o - --clearsign) (r) file def
+{
+    % Probably 80 columns
+    /line 80 string def
+    infile line readline
+    {
+        margin texty moveto
+        line show
+        /texty texty fontsize sub def
+    } {
+        exit
+    } ifelse
+} loop
+
+showpage
