@@ -41,19 +41,17 @@ stroke
 newpath
 /Courier fontsize selectfont
 /texty text_start def
-/infile (%pipe%gpg -o - --clearsign ./inline-signature.ps) (r) file def
 {
     % Probably 80 columns
     /line 80 string def
-    infile line readline
+    currentfile line readline
     {
         margin texty moveto
         line show
         /texty texty fontsize sub def
     } {
+        showpage
         exit
     } ifelse
-} loop
-
-showpage
-
+} loop % End of program, start of data
+fbae2056f1dc4ca873db1c5e2433a45c1756862a887d21c6daee4ca485350d44  -

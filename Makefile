@@ -1,22 +1,36 @@
-GS="gs -sPAPERSIZE=11x17 -dNOPAUSE -dBATCH -sDEVICE=pdfwrite"
+GS = gs -sPAPERSIZE=ledger -dNOPAUSE -dBATCH -sDEVICE=pdfwrite
 
-PDFS=$(wildcard *.pdf)
+pdfs = inline-hash.pdf not-inline-hash.pdf inline-signature.pdf not-inline-signature.pdf
 
-all: $(PDFS)
+all: $(pdfs)
 
-%.pdf: %.ps
-	$(GS) -sOutputFile=$@ $<
+inline-hash.pdf: inline-hash.ps
+	$(GS) \
+	--permit-file-read="%pipe%cat inline-hash.ps && echo -n '% ' && sha256sum inline-hash.ps" \
+	-sOutputFile=inline-hash.pdf \
+	inline-hash.ps
 
-appended-signature.ps: appended-signature.ps.src appended-signature.ascii
-	cat appended-signature.ps.src appended-signature.ascii \
-		> appended-signature.ps
+not-inline-hash.pdf: not-inline-hash.ps
+	$(GS) \
+	--permit-file-read="%pipe%cat not-inline-hash.ps && echo -n '% ' && echo This is not a triangle. | sha256sum" \
+	-sOutputFile=not-inline-hash.pdf \
+	not-inline-hash.ps
 
-appended-signature.ascii: appended-signature.ps.src
-	cat appended-signature.ps.src | sha256sum > appended-signature.ascii
+inline-signature.pdf: inline-signature.ps
+	$(GS) \
+	--permit-file-read="%pipe%gpg -o - --clearsign ./inline-signature.ps" \
+	-sOutputFile=inline-signature.pdf \
+	inline-signature.ps
 
-check-appended-signature:
-	sed -n '/start of data/,$$p' appended-signature.ps | tail -n+2 \
-		> appended-signature-check.ascii
-	sed '/start of data/q' appended-signature.ps | head -n -1 \
-		> appended-signature-check.ps
-	gpg  --verify append-signature-check.ascii append-signature-check.ps
+not-inline-signature.pdf: not-inline-signature.ps
+	$(GS) \
+	--permit-file-read="%pipe%echo This is not a triangle. | gpg -o - --clearsign" \
+	-sOutputFile=not-inline-signature.pdf \
+	not-inline-signature.ps
+
+check: check-appended-signature
+
+clean:
+	rm -f $(pdfs)
+
+.PHONY: all check clean pdfs
