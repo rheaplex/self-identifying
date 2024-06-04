@@ -41,19 +41,24 @@ stroke
 newpath
 /Courier fontsize selectfont
 /texty text_start def
+
+/infile
+(%pipe%cat not-inline-hash.ps \
+&& echo -n '% ' && echo This is not a triangle. \
+| sha256sum)
+(r) file def
 {
     % Probably 80 columns
     /line 80 string def
-    currentfile line readline
+    infile line readline
     {
         margin texty moveto
         line show
         /texty texty fontsize sub def
     } {
-        showpage
         exit
     } ifelse
-} loop %end of program, start of data
-hello
-world
-e93ece1d1ece058bc7c756e0c5de1e3b4f62ce6396ef04e9f6b72c67ce4ca6c2  -
+} loop
+
+showpage
+
