@@ -11,24 +11,15 @@
 /triangleheight pageheight margin 2 mul sub def
 /trianglewidth pagewidth 2 div margin 2 mul sub def
 
-/textstart
-pageheight
-margin
-sub
-fontsize sub
-def
+/textstart pageheight margin sub fontsize sub def
 
 /randomize {
-    rand
-    99 mod
-    1 add
     100 div
+    rand 99 mod 1 add
     mul cvi
 } def
 
-$FIXME: not implemented in gs?
-usertime srand
-
+seed srand
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % The triangle
