@@ -1,14 +1,8 @@
-gs -sPAPERSIZE=11x17 -dNOPAUSE -dBATCH -sDEVICE=pdfwrite \
-    --permit-file-read="%pipe%gpg -o - --clearsign ./inline-signature.ps" \
-    -sOutputFile=inline-signature.pdf inline-signature.ps \
-    && evince inline-signature.pdf
+Notes
+=====
 
-gs -sPAPERSIZE=11x17 -dNOPAUSE -dBATCH -sDEVICE=pdfwrite \
-    -sOutputFile=appended-signature.pdf appended-signature.ps \
-    && evince appended-signature.pdf
+We have to work with Ghostscript's security model.
+This means that we tell Ghostscript which files each script will open.
 
-
-gs -sPAPERSIZE=11x17 -dNOPAUSE -dBATCH -sDEVICE=pdfwrite \
-    --permit-file-read="%pipe%echo This is not a triangle. | gpg -o - --clearsign" \
-    -sOutputFile=not-inline-signature.pdf inline-signature-bad.ps \
-    && evince not-inline-signature.pdf
+We also have to work around Ghostscript's bugs.
+The means passing the random seed explicitly rather than using realtime.
