@@ -36,8 +36,7 @@ rectfill
 0 0 0 1 setcmykcolor
 
 (%pipe%sha256sum square.ps | cut -c-64 | \
- ecdsakeygen -p | ecdsasign square.ps | \
- base64 -w200)
+ ecdsakeygen -p | ecdsasign square.ps)
 margin margin display
 
 (square.ps)

@@ -1,0 +1,63 @@
+%!PS
+
+% ledger
+/pagewidth 17 72 mul def
+/pageheight 11 72 mul def
+/margin 72 def
+/bigfontsize pageheight margin 3 mul sub 5 div def
+
+/display {
+    /texty exch def
+    /textx exch def
+    /infile exch (r) file def
+    /fontsize 10 def
+    /Helvetica fontsize selectfont
+    newpath
+    {
+        /line 200 string def
+        infile line readline
+        {
+            textx texty moveto
+            line show
+            /texty texty fontsize sub def
+        } {
+            exit
+        } ifelse
+    } loop
+} def
+
+/bigdisplay
+
+/Helvetica-Bold bigfontsize selectfont
+margin
+pageheight margin sub bigfontsize sub
+moveto
+(TRANS) show margin
+margin
+pageheight margin sub bigfontsize 2 mul sub
+moveto
+(RIGHTS) show
+margin
+pageheight margin sub bigfontsize 3 mul sub
+moveto
+(ARE) show
+margin
+pageheight margin sub bigfontsize 4 mul sub
+moveto
+(HUMAN) show
+margin
+pageheight margin sub bigfontsize 5 mul sub
+moveto
+(RIGHTS) show
+
+(%pipe%sha256sum statement.ps | cut -c-64 | \
+ ecdsakeygen -p | ecdsasign statement.ps)
+margin margin display
+
+(statement.ps)
+pagewidth 0.75 mul
+pageheight margin sub fontsize sub
+display
+
+showpage
+

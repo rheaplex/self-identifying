@@ -42,8 +42,7 @@ closepath
 stroke
 
 (%pipe%sha256sum triangle.ps | cut -c-64 | \
- ecdsakeygen -p | ecdsasign triangle.ps | \
- base64 -w200)
+ ecdsakeygen -p | ecdsasign triangle.ps)
 margin margin display
 
 (triangle.ps)
