@@ -26,23 +26,32 @@
     } loop
 } def
 
-newpath
+gsave
+<< /PatternType 1
+   /PaintType 1
+   /TilingType 1
+   /BBox [0 0 20 20]
+   /XStep 20 /YStep 20
+   /PaintProc {
+       pop
+       0 0 20 10 rectfill
+   } bind
+>>
+matrix
+makepattern
+setpattern
+margin
+margin 2 mul
+pagewidth 0.75 mul margin 2 mul sub
+pageheight margin 3 mul sub
+rectfill
+grestore
 
-pagewidth 0.375 mul
-pageheight 2 div margin add
-pageheight 2 div margin 2 mul sub
-0
-360
-arc
-
-closepath
-stroke
-
-(%pipe%sha256sum triangle.ps | cut -c-64 | \
- ecdsakeygen -p | ecdsasign triangle.ps)
+(%pipe%sha256sum square.ps | cut -c-64 | \
+ ecdsakeygen -p | ecdsasign stripes.ps)
 margin margin display
 
-(triangle.ps)
+(stripes.ps)
 pagewidth 0.75 mul
 pageheight margin sub fontsize sub
 display
