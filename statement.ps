@@ -1,17 +1,18 @@
 %!PS
 
-% ledger
-/pagewidth 17 72 mul def
-/pageheight 11 72 mul def
+/pagewidth 1548 def
+/pageheight 1224 def
+<< /PageSize [pagewidth pageheight]
+>> setpagedevice
 /margin 72 def
-/bigfontsize pageheight margin 3 mul sub 5 div def
+/fontsize 16 def
+/bigfontsize pageheight margin 3
+mul sub 4.74 div def
 
 /display {
     /texty exch def
     /textx exch def
     /infile exch (r) file def
-    /fontsize 10 def
-    /Helvetica fontsize selectfont
     newpath
     {
         /line 200 string def
@@ -27,37 +28,35 @@
 } def
 
 /bigdisplay
+{
+    0.275 sub bigfontsize mul
+    margin add pageheight exch sub
+    margin exch moveto
+    gsave
+    1.275 1 scale
+    show
+    grestore
+} def
 
 /Helvetica-Bold bigfontsize selectfont
-margin
-pageheight margin sub bigfontsize sub
-moveto
-(TRANS) show margin
-margin
-pageheight margin sub bigfontsize 2 mul sub
-moveto
-(RIGHTS) show
-margin
-pageheight margin sub bigfontsize 3 mul sub
-moveto
-(ARE) show
-margin
-pageheight margin sub bigfontsize 4 mul sub
-moveto
-(HUMAN) show
-margin
-pageheight margin sub bigfontsize 5 mul sub
-moveto
-(RIGHTS) show
+(TRANS) 1 bigdisplay
+(RIGHTS) 2 bigdisplay
+(ARE) 3 bigdisplay
+(HUMAN) 4 bigdisplay
+(RIGHTS) 5 bigdisplay
 
-(%pipe%sha256sum statement.ps | cut -c-64 | \
- ecdsakeygen -p | ecdsasign statement.ps)
+/Helvetica fontsize selectfont
+
+(%pipe%sha256sum statement.ps | \
+ cut -c-64 | ecdsakeygen -p | \
+ ecdsasign statement.ps | \
+ xxd -r -p | base64 -w 100)
 margin margin display
 
 (statement.ps)
 pagewidth 0.75 mul
-pageheight margin sub fontsize sub
+pageheight margin sub
+fontsize 0.7 mul sub
 display
 
 showpage
-

@@ -1,11 +1,11 @@
 %!PS
 
-% ledger
-/pagewidth 17 72 mul def
-/pageheight 11 72 mul def
+/pagewidth 1548 def
+/pageheight 1224 def
+<< /PageSize [pagewidth pageheight]
+>> setpagedevice
 /margin 72 def
-
-/fontsize 10 def
+/fontsize 16 def
 /Helvetica fontsize selectfont
 
 /display {
@@ -30,18 +30,16 @@ gsave
 << /PatternType 1
    /PaintType 1
    /TilingType 1
-   /BBox [0 0 50 50]
-   /XStep 50 /YStep 50
+   /BBox [0 0 205 202]
+   /XStep 204 /YStep 202
    /PaintProc {
        pop
-       0 0 25 25 rectfill
-       25 25 25 25 rectfill
-       fill
+       0 0 102 101 rectfill
+       102 101 102 101 rectfill
    } bind
 >>
-matrix
-makepattern
-setpattern
+margin margin 2 mul matrix translate
+makepattern setpattern
 margin
 margin 2 mul
 pagewidth 0.75 mul margin 2 mul sub
@@ -49,14 +47,16 @@ pageheight margin 3 mul sub
 rectfill
 grestore
 
-(%pipe%sha256sum square.ps | cut -c-64 | \
- ecdsakeygen -p | ecdsasign checks.ps)
+(%pipe%sha256sum checks.ps | \
+ cut -c-64 | ecdsakeygen -p | \
+ ecdsasign checks.ps | \
+ xxd -r -p | base64 -w 100)
 margin margin display
 
 (checks.ps)
 pagewidth 0.75 mul
-pageheight margin sub fontsize sub
+pageheight margin sub
+fontsize 0.7 mul sub
 display
 
 showpage
-

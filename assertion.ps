@@ -1,17 +1,18 @@
 %!PS
 
-% ledger
-/pagewidth 17 72 mul def
-/pageheight 11 72 mul def
+/pagewidth 1548 def
+/pageheight 1224 def
+<< /PageSize [pagewidth pageheight]
+>> setpagedevice
 /margin 72 def
-/bigfontsize pageheight margin 3 mul sub 4 div def
+/fontsize 16 def
+/bigfontsize pageheight margin 3
+mul sub 4 div def
 
 /display {
     /texty exch def
     /textx exch def
     /infile exch (r) file def
-    /fontsize 10 def
-    /Helvetica fontsize selectfont
     newpath
     {
         /line 200 string def
@@ -28,28 +29,29 @@
 
 /bigdisplay
 {
-    % Allow for ascender height on first row
-    0.28 sub bigfontsize mul
-    margin add
-    pageheight exch sub
+    0.275 sub bigfontsize mul
+    margin add pageheight exch sub
     margin exch moveto
     show
 } def
 
 /Helvetica-Bold bigfontsize selectfont
-(this is art) 1 bigdisplay
-(because) 2 bigdisplay
-(it states) 3 bigdisplay
-(that it is art) 4 bigdisplay
+(I hereby) 1 bigdisplay
+(state the) 2 bigdisplay
+(fact that) 3 bigdisplay
+(I am art) 4 bigdisplay
 
-(%pipe%sha256sum assertion.ps | cut -c-64 | \
- ecdsakeygen -p | ecdsasign assertion.ps)
+/Helvetica fontsize selectfont
+(%pipe%sha256sum assertion.ps | \
+ cut -c-64 | ecdsakeygen -p | \
+ ecdsasign assertion.ps | \
+ xxd -r -p | base64 -w 100)
 margin margin display
 
 (assertion.ps)
 pagewidth 0.75 mul
-pageheight margin sub fontsize sub
+pageheight margin sub
+fontsize 0.7 mul sub
 display
 
 showpage
-
