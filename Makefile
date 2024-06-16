@@ -4,7 +4,8 @@ pdfs = triangle.pdf square.pdf circle.pdf \
 	red.pdf yellow.pdf blue.pdf \
 	statement.pdf assertion.pdf critique.pdf \
 	spots.pdf checks.pdf stripes.pdf \
-	bitmap.pdf graymap.pdf pixmap.pdf
+	bitmap.pdf graymap.pdf pixmap.pdf \
+	polyline.pdf curves.pdf turtle.pdf
 
 all: $(pdfs)
 

@@ -1,0 +1,55 @@
+%!PS
+
+/pagewidth 1548 def
+/pageheight 1224 def
+<< /PageSize [pagewidth pageheight]
+>> setpagedevice
+/margin 72 def
+/size pageheight margin 3 mul sub def
+/pointscale size 256 div def
+/fontsize 17 def
+/Helvetica fontsize selectfont
+
+/display {
+    /texty exch def
+    /textx exch def
+    /infile exch (r) file def
+    newpath
+    {
+        /line 200 string def
+        infile line readline
+        {
+            textx texty moveto
+            line show
+            /texty texty fontsize sub def
+        } {
+            exit
+        } ifelse
+    } loop
+} def
+
+gsave
+margin margin 2 mul translate
+newpath
+(%pipe%sha256sum polyline.ps | \
+cut -c-64)
+(r) file 32 string readhexstring pop
+{cvi pointscale mul } forall
+moveto
+15 {lineto} repeat
+stroke
+grestore
+
+(%pipe%sha256sum polyline.ps | \
+ cut -c-64 | ecdsakeygen -p | \
+ ecdsasign polyline.ps | \
+ xxd -r -p | base64 )
+margin margin display
+
+(polyline.ps)
+pagewidth 0.75 mul
+pageheight margin sub
+fontsize 0.7 mul sub
+display
+
+showpage
