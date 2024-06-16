@@ -6,10 +6,14 @@ Rhea Myers, 2024.
 Notes
 =====
 
+macOS Preview.app mangles the images in bitmap/graymap/pixmap.
+They show OK in other PDF viewers, notably Acrobat.
+
+
 The document size is ANSI C.
 
 
-Where you se something like:
+Where you see something like:
 
     0.28 sub bigfontsize mul
 
