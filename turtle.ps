@@ -6,7 +6,7 @@
 >> setpagedevice
 /margin 72 def
 /size pageheight margin 3 mul sub def
-/pointscale size 512 div def
+/pointscale size 640 div def
 /fontsize 17 def
 /Helvetica fontsize selectfont
 
@@ -37,7 +37,7 @@ cut -c-64)
 (r) file 32 string readhexstring pop
 {cvi} forall
 moveto
-10 {128 sub rotate
+10 {180 sub rotate
     pointscale mul exch pointscale mul exch
     lineto} repeat
 stroke
@@ -46,7 +46,7 @@ grestore
 (%pipe%sha256sum turtle.ps | \
  cut -c-64 | ecdsakeygen -p | \
  ecdsasign turtle.ps | \
- xxd -r -p | base64 )
+ xxd -r -p | base64 -w 100)
 margin margin display
 
 (turtle.ps)
