@@ -26,6 +26,15 @@
     } loop
 } def
 
+margin
+margin 2 mul
+pagewidth 0.75 mul margin 2 mul sub
+pageheight margin 3 mul sub
+gsave
+0 0 1 0 setcmykcolor
+rectfill
+grestore
+
 gsave
 << /PatternType 1
    /PaintType 1
@@ -34,7 +43,7 @@ gsave
    /XStep 2000 /YStep 198
    /PaintProc {
        pop
-       0 0 2000 128 rectfill
+       0 0 2000 99 rectfill
    } bind
 >>
 [1 0.5 0 1 0 0] makepattern setpattern
@@ -55,6 +64,7 @@ margin margin display
 pagewidth 0.75 mul
 pageheight margin sub
 fontsize 0.7 mul sub
+0.51024 sub
 display
 
 showpage

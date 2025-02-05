@@ -1,18 +1,28 @@
-GS = gs -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -dNOSAFER
+GS = gs -dNOPAUSE -dBATCH -dNOSAFER
 
-pdfs = triangle.pdf square.pdf circle.pdf \
-	red.pdf yellow.pdf blue.pdf \
-	statement.pdf assertion.pdf critique.pdf \
-	spots.pdf checks.pdf stripes.pdf \
-	bitmap.pdf graymap.pdf pixmap.pdf \
-	polyline.pdf curves.pdf turtle.pdf
+SELVES = triangle square circle \
+	red yellow blue \
+	statement assertion critique \
+	spots checks stripes \
+	bitmap graymap pixmap \
+	polyline curves turtle
 
-all: $(pdfs)
+PSES = $(addsuffix .ps,$(SELVES))
+PDFS = $(addsuffix .pdf,$(SELVES))
+PNGS = $(addsuffix .png,$(SELVES))
+
+all: $(PDFS) $(PNGS)
 
 %.pdf: %.ps
-	$(GS) -sOutputFile=$@ $<
+	$(GS) -sDEVICE=pdfwrite -sOutputFile=$@ $< \
+		-c "[ /Title (i am $(basename $<)) /DOCINFO pdfmark"
+
+%.png: %.ps
+	$(GS) -sDEVICE=png16m -r357.2 -dBackgroundColor=16#FFFFFF \
+		-dTextAlphaBits=4 -dGraphicsAlphaBits=4 \
+		-sOutputFile=$@ $<
 
 clean:
-	rm -f $(pdfs)
+	rm -f $(PDFS) $(PNGS)
 
-.PHONY: all clean pdfs
+.PHONY: all clean PDFS PNGS
