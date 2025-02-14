@@ -5,7 +5,7 @@
 << /PageSize [pagewidth pageheight]
 >> setpagedevice
 /margin 72 def
-/fontsize 16 def
+/fontsize 15 def
 /Helvetica fontsize selectfont
 
 /display {
@@ -26,13 +26,11 @@
     } loop
 } def
 
-margin
-margin 2 mul
+margin margin 2 mul
 pagewidth 0.75 mul margin 2 mul sub
 pageheight margin 3 mul sub
 gsave
-0 0 1 0 setcmykcolor
-rectfill
+0 0 1 0 setcmykcolor rectfill
 grestore
 
 gsave
@@ -47,8 +45,7 @@ gsave
    } bind
 >>
 [1 0.5 0 1 0 0] makepattern setpattern
-margin
-margin 2 mul
+margin margin 2 mul
 pagewidth 0.75 mul margin 2 mul sub
 pageheight margin 3 mul sub
 rectfill
