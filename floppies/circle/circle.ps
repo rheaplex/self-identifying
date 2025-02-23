@@ -1,5 +1,6 @@
 %!PS
 
+
 /pagewidth 1548 def
 /pageheight 1224 def
 << /PageSize [pagewidth pageheight]
@@ -26,26 +27,28 @@
     } loop
 } def
 
-0 0 1 0 setcmykcolor
-margin
-margin 2 mul
-pageheight margin 3 mul sub
-dup
-rectfill
+newpath
 
-0 0 0 1 setcmykcolor
+pagewidth 0.375 mul
+pageheight 2 div margin add
+pageheight 2 div margin 2 mul sub
+0
+360
+arc
 
-(%pipe%sha256sum yellow.ps | \
+closepath
+stroke
+
+(%pipe%sha256sum circle.ps | \
  cut -c-64 | ecdsakeygen -p | \
- ecdsasign yellow.ps | \
+ ecdsasign circle.ps | \
  xxd -r -p | base64 -w 100)
 margin margin display
 
-(yellow.ps)
+(circle.ps)
 pagewidth 0.75 mul
 pageheight margin sub
 fontsize 0.7 mul sub
-0.51024 sub
 display
 
 showpage

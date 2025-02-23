@@ -1,0 +1,63 @@
+%!PS
+
+/pagewidth 1548 def
+/pageheight 1224 def
+<< /PageSize [pagewidth pageheight]
+>> setpagedevice
+/margin 72 def
+/fontsize 16 def
+/bigfontsize pageheight margin 3 mul sub 9 div def
+
+/display {
+    /texty exch def
+    /textx exch def
+    /infile exch (r) file def
+    newpath
+    {
+        /line 200 string def
+        infile line readline
+        {
+            textx texty moveto
+            line show
+            /texty texty fontsize sub def
+        } {
+            exit
+        } ifelse
+    } loop
+} def
+
+/bigdisplay
+{
+    0.32 sub bigfontsize mul
+    margin add pageheight exch sub
+    margin exch moveto
+    show
+} def
+
+/Times-Roman bigfontsize selectfont
+(This show represents) 1 bigdisplay
+(a striking new direction) 2 bigdisplay
+(for post-contemporary) 3 bigdisplay
+(art against the ground) 4 bigdisplay
+(of a rudderless wider) 5 bigdisplay
+(culture despite using) 6 bigdisplay
+(that very culture's) 7 bigdisplay
+(exhausted, increasingly) 8 bigdisplay
+(toxic waste materials.) 9 bigdisplay
+
+/Helvetica fontsize selectfont
+
+(%pipe%sha256sum critique.ps | \
+ cut -c-64 | ecdsakeygen -p | \
+ ecdsasign critique.ps | \
+ xxd -r -p | base64 -w 100)
+margin margin display
+
+(critique.ps)
+pagewidth 0.75 mul
+pageheight margin sub
+fontsize 0.7 mul sub
+2.975 sub
+display
+
+showpage
