@@ -1,13 +1,14 @@
-# Self-Identifying
+# Self-Identifying: Yellow (Floppy Edition)
 
-*PostScipt programs, dimensions variable, Rhea Myers, 2025*
+*PostScipt program on Floppy Disk, dimensions variable, Rhea Myers,
+ 2025*
 
 ## About
 
-*Self-Identifying* is a series of
-image-generating programs written in *PostScript*, formerly the lingua
-franca of design and printing. Each of these programs has been turned into a
-self-referential and self-reproducing *Quine* that prints its
+*Self-Identifying: Yellow (Floppy Edition)* is an
+image-generating program written in *PostScript*, formerly the lingua
+franca of design and printing. It has been turned into a
+self-referential and self-reproducing *Quine* program that prints its
 own source code. While it is doing so, it creates a cryptographic
 identity not just for but of itself, and cryptographically signs its
 image with it. This mirrors the cypherpunk conceptions of personhood
@@ -23,11 +24,31 @@ tools.
 
 The crypto community's statement “Not your keys, not your coins” is
 the “I think therefore I am” of the blockchain age. Through its
-self-verifying code, *Self-Identifying*
+self-verifying code, *Self-Identifying: Yellow (Floppy Edition)*
 asserts these historical philosophical ideas of selfhood against the
 contemporary backlash against self-determination.
 
+## Care and Handling
+
+Floppy disks are an aging and fragile medium. Make sure not to:
+
+* Pull back the metal cover for the disk.
+* Touch the disk inside its case.
+* Let dust or moisture enter the disk case.
+* Bring any magnets or sources of magnetism near to the disk.
+* Let the disk get too hot or cold (the manufacturer recommends
+  keeping it between 10-60 degrees Celsius / 50-140 degrees
+  Fahrenheit).
+
 ## Requirements
+
+To read this file and access the others on this disk you will need to
+have a floppy disk drive.
+
+Before doing anything else you should create a copy of this disk. You
+have explicit authorization to do so as many times as needed to ensure
+that you retain access to its content while the original is in your
+possession. (If in doubt, take a copy.)
 
 To recreate the image files from the PostScript source, you will need
 a Unix shell environment (such as GNU/Linux or macOS) with the
@@ -46,16 +67,19 @@ GhostScript, can be installed as a package. Others, like ecdsasign,
 may be hidden within another installable package.
 
 To rebuild the image files, **which will erase the originals**, enter a
-Unix shell and type the following in this directory:
+Unix shell and type the following, replacing `/PATH/TO/THE/FLOPPY`
+with the path to the drive containing the floppy disk containing these
+files.
 
 ```
+cd /PATH/TO/THE/FLOPPY
 make clean
 make
 ```
 
 ## Display
 
-The PNG of each image is sized for screen display.
+The PNG of the image is sized for screen display.
 
 Should you need a larger image for display, the PDF can be rasterized
 with different size and/or resolution settings to produce it.

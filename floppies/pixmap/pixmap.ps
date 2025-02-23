@@ -5,7 +5,8 @@
 << /PageSize [pagewidth pageheight]
 >> setpagedevice
 /margin 72 def
-/fontsize 18 def
+/size pageheight margin 3 mul sub def
+/fontsize 17 def
 /Helvetica fontsize selectfont
 
 /display {
@@ -26,22 +27,23 @@
     } loop
 } def
 
-0 0 1 0 setcmykcolor
-margin
-margin 2 mul
-pageheight margin 3 mul sub
-dup
-rectfill
+gsave
+margin margin 2 mul translate
+size size scale
+5 17 1 [5 0 0 17 0 0]
+(%pipe%sha256sum pixmap.ps | \
+cut -c-64)
+(r) file 32 string readhexstring pop
+false 3 colorimage
+grestore
 
-0 0 0 1 setcmykcolor
-
-(%pipe%sha256sum yellow.ps | \
+(%pipe%sha256sum pixmap.ps | \
  cut -c-64 | ecdsakeygen -p | \
- ecdsasign yellow.ps | \
+ ecdsasign pixmap.ps | \
  xxd -r -p | base64 -w 100)
 margin margin display
 
-(yellow.ps)
+(pixmap.ps)
 pagewidth 0.75 mul
 pageheight margin sub
 fontsize 0.7 mul sub

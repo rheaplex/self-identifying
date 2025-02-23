@@ -5,8 +5,9 @@
 << /PageSize [pagewidth pageheight]
 >> setpagedevice
 /margin 72 def
-/fontsize 18 def
-/Helvetica fontsize selectfont
+/fontsize 16 def
+/bigfontsize pageheight margin 3
+mul sub 4 div def
 
 /display {
     /texty exch def
@@ -26,26 +27,32 @@
     } loop
 } def
 
-0 0 1 0 setcmykcolor
-margin
-margin 2 mul
-pageheight margin 3 mul sub
-dup
-rectfill
+/bigdisplay
+{
+    0.275 sub bigfontsize mul
+    margin add pageheight exch sub
+    margin exch moveto
+    show
+} def
 
-0 0 0 1 setcmykcolor
+/Helvetica-Bold bigfontsize selectfont
+(I hereby) 1 bigdisplay
+(state the) 2 bigdisplay
+(fact that) 3 bigdisplay
+(I am art) 4 bigdisplay
 
-(%pipe%sha256sum yellow.ps | \
+/Helvetica fontsize selectfont
+(%pipe%sha256sum assertion.ps | \
  cut -c-64 | ecdsakeygen -p | \
- ecdsasign yellow.ps | \
+ ecdsasign assertion.ps | \
  xxd -r -p | base64 -w 100)
 margin margin display
 
-(yellow.ps)
+(assertion.ps)
 pagewidth 0.75 mul
 pageheight margin sub
 fontsize 0.7 mul sub
-0.51024 sub
+0.73 sub
 display
 
 showpage
